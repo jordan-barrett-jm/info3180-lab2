@@ -7,6 +7,7 @@ This file creates your application.
 
 from app import app
 from flask import render_template, request, redirect, url_for, flash
+from datetime import datetime
 
 
 ###
@@ -46,6 +47,16 @@ def add_header(response):
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
+
+@app.route('/profile')
+def profile():
+    join_date = format_date_joined("October 12, 2021")
+    return render_template('profile.html', join_date=join_date)
+
+def format_date_joined(join_date):
+    dt_obj = datetime.strptime(join_date, '%B %d, %Y')
+    return dt_obj.strftime('%B, %Y')
+
 
 
 @app.errorhandler(404)
